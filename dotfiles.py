@@ -2,7 +2,6 @@
 from argparse import ArgumentParser
 from pathlib import Path
 from subprocess import run
-import sys
 from typing import Callable
 
 
