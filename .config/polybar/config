@@ -1,0 +1,347 @@
+;==========================================================
+;
+;   Peko×Miko
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
+
+[colors]
+background = #e616161C
+background-alt = #e638361C
+foreground = #dfdfdf
+foreground-alt = #555
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+
+peko-dark = #7eaff5
+peko-light = #afcfff
+peko-dark-alt = #e67eaff5
+peko-light-alt = #e6afcfff
+
+miko-dark = #fb788b
+miko-light = #ff8fc4
+miko-dark-alt = #e6fb788b
+miko-light-alt = #e6ff8fc4
+
+[bar/peko-miko]
+;monitor = ${env:MONITOR:HDMI-1}
+width = 100%
+height = 27
+;offset-x = 1%
+;offset-y = 1%
+radius = 0.0
+fixed-center = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 2
+line-color = #f00
+
+border-bottom-size = 0
+border-color = #00000000
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = Monoid Nerd Font:style=Retina:size=7
+font-1 = Noto Sans CJK JP:style=Regular:size=7
+
+font-2 = all\-the\-icons:style=Regular
+font-3 = file\-icons:style=Regular:size=7
+font-4 = github\-octicons:style=Regular
+
+modules-left = bspwm emacs firefox discord
+modules-center = filesystem cpu memory battery date
+modules-right = pulseaudio backlight
+
+tray-position = right
+tray-padding = 4
+;tray-background = #0063ff
+
+;wm-restack = bspwm
+;wm-restack = i3
+
+override-redirect = true
+
+;scroll-up = bspwm-desknext
+;scroll-down = bspwm-deskprev
+
+;scroll-up = i3wm-wsnext
+;scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+cursor-scroll = pointer
+
+separator = |
+
+[module/spotify]
+type = custom/script
+tail = true
+format-prefix = "Now Playing: "
+format = <label>
+exec = ~/.config/polybar/extra/scroll_spotify_status.sh
+
+[module/emacs]
+type = custom/text
+
+content-prefix = %{T4}
+content = %{T-}Emacs
+
+content-foreground = ${colors.peko-light}
+
+content-prefix-padding-right = 1
+content-margin = 1
+
+click-left = emacs
+
+[module/firefox]
+type = custom/text
+
+content-prefix = %{T4}
+content = %{T-}Firefox
+
+content-foreground = ${colors.miko-light}
+
+content-prefix-padding-right = 2
+content-margin = 1
+
+click-left = firefox
+
+[module/discord]
+type = custom/text
+
+content-prefix = %{T4}ﭮ
+content = %{T-}Discord
+
+content-foreground = ${colors.peko-light}
+
+content-prefix-padding-right = 2
+content-margin = 1
+
+click-left = discord
+
+[module/backlight]
+type = custom/script
+
+exec = ~/.config/polybar/extra/backlight.py
+
+tail = true
+interval = 2
+
+scroll-up = ~/.config/polybar/extra/backlight.py increase
+scroll-down = ~/.config/polybar/extra/backlight.py decrease
+
+label-foreground = ${colors.peko-dark}
+
+format-margin = 1
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+
+[module/filesystem]
+type = internal/fs
+interval = 30
+
+mount-0 = /
+
+label-mounted = %{F#7eaff5}%mountpoint%%{F#afcfff}: %percentage_used%%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+label-mounted-margin = 1
+
+[module/bspwm]
+type = internal/bspwm
+
+label-focused = %index%
+label-focused-foreground = ${colors.peko-dark}
+label-focused-padding = 2
+
+label-occupied = %index%
+label-occupied-foreground = ${colors.miko-dark}
+label-occupied-padding = 2
+
+label-urgent = %index%!
+label-urgent-background = ${colors.miko-dark}
+label-urgent-padding = 2
+
+label-empty = %index%
+label-empty-foreground = ${colors.foreground-alt}
+label-empty-padding = 2
+
+; Separator in between workspaces
+; label-separator = |
+
+# label-focused-underline= #7AEBBE
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+
+format-prefix = "CPU: "
+label = %percentage:2%%
+
+format-prefix-foreground = ${colors.peko-dark}
+format-background = ${colors.background}
+
+label-foreground = ${colors.peko-dark}
+label-background = ${colors.background}
+
+format-margin = 1
+
+[module/memory]
+type = internal/memory
+interval = 2
+
+format-prefix = "RAM: "
+label = %percentage_used%%
+
+format-prefix-foreground = ${colors.peko-light}
+format-prefix-background = ${colors.background}
+
+label-foreground = ${colors.peko-light}
+label-background = ${colors.background}
+
+format-margin = 1
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = ADP1
+full-at = 98
+
+format-charging-prefix = "AC "
+format-charging = <animation-charging> <label-charging>
+format-charging-foreground = ${colors.miko-dark}
+format-charging-background = ${colors.background}
+label-charging-foreground = ${colors.miko-dark}
+
+format-discharging-prefix = "BT "
+format-discharging = <animation-discharging> <label-discharging>
+format-discharging-foreground = ${colors.miko-dark}
+format-discharging-background = ${colors.background}
+label-discharging-foreground = ${colors.miko-dark}
+
+format-full-prefix = " "
+format-full = FULL
+format-full-background = ${colors.background}
+format-full-foreground = ${colors.miko-dark}
+
+animation-charging-0 = +
+animation-charging-1 = |
+animation-charging-2 = ^
+animation-charging-foreground = ${colors.miko-dark}
+animation-charging-framerate = 750
+
+animation-discharging-0 = *
+animation-discharging-1 = |
+animation-discharging-2 = v
+animation-discharging-foreground = ${colors.miko-dark}
+animation-discharging-framerate = 750
+
+format-charging-margin = 1
+format-discharging-margin = 1
+format-full-margin = 1
+
+[module/date]
+type = internal/date
+interval = 5
+
+date = %{T5} %{T-}%Y-%m-%d
+# date-alt = " %Y-%m-%d"
+
+time = %{T5} %{T-}%H:%M:%S
+# time-alt = %H:%M:%S
+
+format-foreground = ${colors.miko-light}
+format-background = ${colors.background}
+
+label = %date% | %time%
+
+format-margin = 1
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume-margin = 1
+format-muted-margin = 1
+
+format-volume = <label-volume> <bar-volume>
+label-volume = VOL: %percentage%%
+label-volume-foreground = ${colors.peko-light}
+
+label-muted = muted
+label-muted-foreground = ${colors.miko-dark}
+
+bar-volume-width = 10
+bar-volume-foreground-0 = ${colors.miko-light}
+bar-volume-foreground-1 = ${colors.miko-light}
+bar-volume-foreground-2 = ${colors.miko-light}
+bar-volume-foreground-3 = ${colors.miko-light}
+bar-volume-foreground-4 = ${colors.miko-light}
+bar-volume-foreground-5 = ${colors.miko-dark}
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = true
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+click-right = pavucontrol
+
+[module/wlan]
+type = internal/network
+interface = wlp2s0
+interval = 3.0
+
+format-connected-margin = 1
+
+format-connected = <ramp-signal> <label-connected>
+label-connected = %essid%
+label-connected-foreground = ${colors.miko-light}
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-foreground = ${colors.miko-light}
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+pseudo-transparency = true
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+; vim:ft=dosini
