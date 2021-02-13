@@ -44,7 +44,7 @@ if __name__ == "__main__":
                 to = Path(args.to)
 
             if not to.exists():
-                to.mkdir()
+                to.mkdir(parents=True)
 
             action(package.name, args.folder, to)
 
