@@ -4,13 +4,13 @@ Personal dotfiles.
 # Configuration
 Files can be set-up using the `dotfiles.py` command line tool:
 ```sh
-λ ./dotfiles.py (stow|unstow|restow) <folder> [<package>] [-t|--to <target>]
+λ ./dotfiles.py (stow|unstow|restow) <folder> (<packages>*) [-t|--to <target>]
 λ
 λ # Stow an entire folder
 λ ./dotfiles.py stow .config
 λ
-λ # Stow a specific package
-λ ./dotfiles.py stow .config bspwm
+λ # Stow one or more packages
+λ ./dotfiles.py stow .config bspwm dunst
 λ
 λ # Stow on a manually-specified target folder
 λ ./dotfiles.py stow .config polybar -t $HOME/.config-alt

@@ -15,7 +15,7 @@ TO_OVERRIDES = {
 CLI_PARSER = ArgumentParser("dotfiles")
 CLI_PARSER.add_argument("action", choices=["stow", "unstow", "restow"])
 CLI_PARSER.add_argument("folder")
-CLI_PARSER.add_argument("package", nargs="?")
+CLI_PARSER.add_argument("packages", nargs="*")
 CLI_PARSER.add_argument("-t", "--to", default=None)
 
 
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     args = CLI_PARSER.parse_args()
     action = actions[args.action]
 
-    if args.package is None:
+    if len(args.packages) == 0:
         folder = Path(args.folder)
         for package in folder.iterdir():
             if args.to is None:
@@ -56,6 +56,7 @@ if __name__ == "__main__":
             action(package.name, args.folder, to)
 
     else:
-        action(
-            args.package, args.folder, HOME / args.folder / args.package
-        )
+        for package in args.packages:
+            action(
+                package, args.folder, HOME / args.folder / package
+            )
