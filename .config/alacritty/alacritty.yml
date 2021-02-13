@@ -1,0 +1,39 @@
+font:
+  size: 8.8
+  normal:
+    family: FiraCode Nerd Font
+    style: Regular
+  bold:
+    family: FiraCode Nerd Font
+    style: Bold
+  italic:
+    family: FiraCode Nerd Font
+    style: Italic
+
+colors:
+  primary:
+    background: '#16161C'
+    foreground: '#FADAD1'
+
+  normal:
+    black:   '#1f1f1f'
+    red:     '#f94d4d'
+    green:   '#4df99b'
+    yellow:  '#f9ee4d'
+    blue:    '#4db2f9'
+    magenta: '#e04df9'
+    cyan:    '#4debf9'
+    white:   '#f2ebba'
+
+  bright:
+    black:   '#4b4b4b'
+    red:     '#f98b8b'
+    green:   '#a7f98b'
+    yellow:  '#f9f88b'
+    blue:    '#8bc6f9'
+    magenta: '#e592fc'
+    cyan:    '#92f3fc'
+    white:   '#ffefd0'
+
+background_opacity: 0.9
+live_config_reload: true
