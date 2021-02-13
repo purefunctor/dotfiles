@@ -12,6 +12,7 @@ CLI_PARSER = ArgumentParser("dotfiles")
 CLI_PARSER.add_argument("action", choices=["stow", "unstow", "restow"])
 CLI_PARSER.add_argument("folder")
 CLI_PARSER.add_argument("package", nargs="?")
+CLI_PARSER.add_argument("-t", "--to", default=None)
 
 
 def _stow(command: str, package: str, source: Path, target: Path) -> None:
@@ -37,12 +38,15 @@ if __name__ == "__main__":
 
     if args.package is None:
         for package in Path(args.folder).iterdir():
-            target = HOME / args.folder / package.name
+            if args.to is None:
+                to = HOME / args.folder / package.name
+            else:
+                to = Path(args.to)
 
-            if not target.exists():
-                target.mkdir()
+            if not to.exists():
+                to.mkdir()
 
-            action(package.name, args.folder, target)
+            action(package.name, args.folder, to)
 
     else:
         action(
