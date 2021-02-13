@@ -20,7 +20,7 @@ CLI_PARSER.add_argument("-t", "--to", default=None)
 
 
 def _stow(command: str, package: str, source: Path, target: Path) -> None:
-    run(["stow", command, package, "-d", source, "-t", target])
+    run(["stow", command, package, "-d", source, "-t", target, "-vv"])
 
 
 def stow(package: str, source: Path, target: Path) -> None:
