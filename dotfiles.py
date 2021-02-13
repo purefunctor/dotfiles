@@ -23,20 +23,8 @@ def _stow(command: str, package: str, source: Path, target: Path) -> None:
     run(["stow", command, package, "-d", source, "-t", target, "-vv"])
 
 
-def stow(package: str, source: Path, target: Path) -> None:
-    _stow("-S", package, source, target)
-
-
-def unstow(package: str, source: Path, target: Path) -> None:
-    _stow("-D", package, source, target)
-
-
-def restow(package: str, source: Path, target: Path) -> None:
-    _stow("-R", package, source, target)
-
-
 if __name__ == "__main__":
-    actions = {"stow": stow, "unstow": unstow, "restow": restow}
+    actions = {"stow": "-S", "unstow": "-D", "restow": "-R"}
     args = CLI_PARSER.parse_args()
     action = actions[args.action]
 
@@ -53,10 +41,18 @@ if __name__ == "__main__":
 
             to = TO_OVERRIDES.get(folder, to)
 
-            action(package.name, args.folder, to)
+            _stow(
+                action,
+                package.name,
+                args.folder,
+                to
+            )
 
     else:
-        for package in args.packages:
-            action(
-                package, args.folder, HOME / args.folder / package
+        for package_name in args.packages:
+            _stow(
+                action,
+                package_name,
+                args.folder,
+                HOME / args.folder / package_name,
             )
