@@ -8,6 +8,10 @@ from typing import Callable
 HERE = Path.cwd()
 HOME = Path.home()
 
+TO_OVERRIDES = {
+    Path(".home"): HOME,
+}
+
 CLI_PARSER = ArgumentParser("dotfiles")
 CLI_PARSER.add_argument("action", choices=["stow", "unstow", "restow"])
 CLI_PARSER.add_argument("folder")
@@ -37,7 +41,8 @@ if __name__ == "__main__":
     action = actions[args.action]
 
     if args.package is None:
-        for package in Path(args.folder).iterdir():
+        folder = Path(args.folder)
+        for package in folder.iterdir():
             if args.to is None:
                 to = HOME / args.folder / package.name
             else:
@@ -45,6 +50,8 @@ if __name__ == "__main__":
 
             if not to.exists():
                 to.mkdir(parents=True)
+
+            to = TO_OVERRIDES.get(folder, to)
 
             action(package.name, args.folder, to)
 
