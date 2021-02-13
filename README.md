@@ -4,7 +4,7 @@ Personal dotfiles.
 # Configuration
 Files can be set-up using the `dotfiles.py` command line tool:
 ```sh
-λ ./dotfiles.py (stow|unstow|restow) <folder> (<packages>*) [-t|--to <target>]
+λ ./dotfiles.py (stow|unstow|restow) <folder> (<packages>*) [-t|--to <target>] [-v*]
 λ
 λ # Stow an entire folder
 λ ./dotfiles.py stow .config
@@ -19,4 +19,7 @@ Files can be set-up using the `dotfiles.py` command line tool:
 λ # This makes use of the `TO_OVERRIDES` constant within
 λ # `dotfiles.py` in order to point `.home` to `$HOME`.
 λ ./dotfiles.py stow .home
+λ
+λ # Enable verbose output
+λ ./dotfiles.py restow .config -vvv
 ```

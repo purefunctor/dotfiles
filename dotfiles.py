@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from argparse import ArgumentParser
+from itertools import repeat
 from pathlib import Path
 from subprocess import run
 from typing import Callable
@@ -17,16 +18,24 @@ CLI_PARSER.add_argument("action", choices=["stow", "unstow", "restow"])
 CLI_PARSER.add_argument("folder")
 CLI_PARSER.add_argument("packages", nargs="*")
 CLI_PARSER.add_argument("-t", "--to", default=None)
+CLI_PARSER.add_argument("-v", action="count")
 
 
-def _stow(command: str, package: str, source: Path, target: Path) -> None:
-    run(["stow", command, package, "-d", source, "-t", target, "-vv"])
+def _stow(
+    command: str, package: str, source: Path, target: Path, verbosity: str
+) -> None:
+    run(["stow", command, package, "-d", source, "-t", target, verbosity])
 
 
 if __name__ == "__main__":
     actions = {"stow": "-S", "unstow": "-D", "restow": "-R"}
     args = CLI_PARSER.parse_args()
     action = actions[args.action]
+
+    if args.v is None:
+        verbosity = ""
+    else:
+        verbosity = "-" + "".join(repeat('v', args.v))
 
     if len(args.packages) == 0:
         folder = Path(args.folder)
@@ -45,7 +54,8 @@ if __name__ == "__main__":
                 action,
                 package.name,
                 args.folder,
-                to
+                to,
+                verbosity
             )
 
     else:
@@ -55,4 +65,5 @@ if __name__ == "__main__":
                 package_name,
                 args.folder,
                 HOME / args.folder / package_name,
+                verbosity,
             )
