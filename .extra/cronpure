@@ -1,0 +1,2 @@
+0 8 * * * /home/pure/.pure/scripts/wallpaper.sh day
+0 18 * * * /home/pure/.pure/scripts/wallpaper.sh night
