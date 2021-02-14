@@ -24,7 +24,7 @@ bspc rule -a Emacs state=tiled
 
 bspc config focus_follows_pointer true
 
-~/.fehbg &
+cronwhip --start now --interval 24
 
 xsetroot -cursor_name left_ptr
 xinput set-prop "Synaptics TM3336-001" "libinput Tapping Enabled" 1
