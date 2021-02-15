@@ -3,7 +3,7 @@ from argparse import ArgumentParser
 from itertools import repeat
 from pathlib import Path
 from subprocess import run
-from typing import Callable
+from typing import Callable, Optional, Union
 
 
 HERE = Path.cwd()
@@ -22,20 +22,26 @@ CLI_PARSER.add_argument("-v", action="count")
 
 
 def _stow(
-    command: str, package: str, source: Path, target: Path, verbosity: str
+    command: str,
+    package: str,
+    source: Union[Path, str],
+    target: Union[Path, str],
+    verbosity: Optional[int],
 ) -> None:
-    run(["stow", command, package, "-d", source, "-t", target, verbosity])
+    arguments = [
+        "stow", command, package, "-d", str(source), "-t", str(target),
+    ]
+
+    if verbosity is not None:
+        arguments.append("-" + "".join(repeat("v", verbosity)))
+
+    run(arguments)
 
 
 if __name__ == "__main__":
     actions = {"stow": "-S", "unstow": "-D", "restow": "-R"}
     args = CLI_PARSER.parse_args()
     action = actions[args.action]
-
-    if args.v is None:
-        verbosity = ""
-    else:
-        verbosity = "-" + "".join(repeat('v', args.v))
 
     if len(args.packages) == 0:
         folder = Path(args.folder)
@@ -55,7 +61,7 @@ if __name__ == "__main__":
                 package.name,
                 args.folder,
                 to,
-                verbosity
+                args.v,
             )
 
     else:
@@ -65,5 +71,5 @@ if __name__ == "__main__":
                 package_name,
                 args.folder,
                 HOME / args.folder / package_name,
-                verbosity,
+                args.v,
             )
