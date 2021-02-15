@@ -12,7 +12,7 @@
 
 [colors]
 white = #dfdfdf
-gray = #777777
+gray = #aaaaaa
 black = #e616161C
 purple = #d59bf7
 pink = #f79bbd
@@ -23,7 +23,7 @@ orange = #f4c489
 sky = #9ecff7
 lavender = #c69ef7
 transparent = #00000000
-transparent-less = #55000000
+transparent-less = #AA000000
 
 [bar/solidus]
 width = 100%
@@ -77,6 +77,7 @@ label-focused-padding = 2
 
 label-occupied = %index%
 label-occupied-foreground = ${colors.lavender}
+label-occupied-underline = ${colors.lavender}
 label-occupied-background = ${colors.transparent-less}
 label-occupied-padding = 2
 
