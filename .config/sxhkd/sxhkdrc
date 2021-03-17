@@ -126,19 +126,19 @@ super + {Left,Down,Up,Right}
 
 # full maim screenshot to clipboard
 Print
-  maim -u | xclip -selection clipboard -t image/png -i && notify-send --icon=clipboard "Copied screenshot to clipboard"
+  maim -u -B | xclip -selection clipboard -t image/png -i && notify-send --icon=clipboard "Copied screenshot to clipboard"
 
 # selected maim screenshot to clipboard
 super + Print
-  maim -s -u | xclip -selection clipboard -t image/png -i && notify-send --icon=clipboard "Copied screenshot to clipboard"
+  maim -s -u -B | xclip -selection clipboard -t image/png -i && notify-send --icon=clipboard "Copied screenshot to clipboard"
 
 # full maim screenshot to file
 shift + Print
-  maim -u ~/Screenshots/$(date +maim_%Y_%m_%d_%H_%M_%S).png && notify-send --icon="add-folder-to-archive" "Saved screenshot to file"
+  maim -u -B ~/Screenshots/$(date +maim_%Y_%m_%d_%H_%M_%S).png && notify-send --icon="add-folder-to-archive" "Saved screenshot to file"
 
 # selected maim screenshot to file
 super + shift + Print
-  maim -s -u ~/Screenshots/$(date +maim_%Y_%m_%d_%H_%M_%S).png && notify-send --icon="add-folder-to-archive" "Saved screenshot to file"
+  maim -s -u -B ~/Screenshots/$(date +maim_%Y_%m_%d_%H_%M_%S).png && notify-send --icon="add-folder-to-archive" "Saved screenshot to file"
 
 # brightness control
 XF86MonBrightness{Down,Up}
