@@ -171,6 +171,8 @@
   (which-key-mode))
 
 (use-package haskell-mode
+  :bind
+  ("C-c f" . 'haskell-mode-stylish-buffer)
   :hook
   (haskell-mode . (lambda () (setq-local eldoc-documentation-function nil))))
 
@@ -268,7 +270,8 @@
    '("59ba50f24540958f33699a5247255d10f34dd812f3975837e3eddccdc4caa32e" "68fb87a1805393d7a00ba5064d28b8277de5a75addf0d34094012408cfcf2eea" default))
  '(global-whitespace-cleanup-mode t)
  '(package-selected-packages
-   '(lsp-pyright diminish ample-theme vterm yaml-mode purescript-mode flycheck ws-butler rainbow-delimiters visual-fill-column org-superstar evil-org company company-mode lsp-ui direnv lsp-haskell lsp-mode haskell-mode evil-collection which-key magit emojify base16-theme elcord use-package)))
+   '(lsp-pyright diminish ample-theme vterm yaml-mode purescript-mode flycheck ws-butler rainbow-delimiters visual-fill-column org-superstar evil-org company company-mode lsp-ui direnv lsp-haskell lsp-mode haskell-mode evil-collection which-key magit emojify base16-theme elcord use-package))
+ '(safe-local-variable-values '((dante-methods bare-cabal))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
