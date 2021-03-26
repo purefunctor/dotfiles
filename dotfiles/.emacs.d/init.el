@@ -141,8 +141,8 @@
 
 (defun pure/org-fill-center ()
   "Startup configuration for `org-mode` fill."
-  (setq visual-fill-column-width 100)
-  (setq visual-fill-column-center-text t)
+  (defvar visual-fill-column-width 100)
+  (defvar visual-fill-column-center-text t)
   (visual-fill-column-mode 1)
   (visual-line-mode 1))
 
