@@ -211,8 +211,7 @@
   :ensure t
   :bind
   ("C-c /" . 'psc-ide-flycheck-insert-suggestion)
-  ("M-[" . 'xref-find-references)
-  ("M-]" . 'xref-find-definitions)
+  ("M-]" . 'psc-ide-goto-definition)
   :after purescript-mode
   :hook
   (purescript-mode . psc-ide-mode))
