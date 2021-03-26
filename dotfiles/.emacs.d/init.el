@@ -1,3 +1,11 @@
+;;; init.el --- Pure's Personal Emacs Configuration
+;;;
+;;; Commentary:
+;;;
+;;; I honestly do not know what I'm doing, but here.
+;;;
+;;; Code:
+
 ;; Startup Options
 (setq inhibit-startup-message t)
 
@@ -239,3 +247,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+;;; init.el ends here
