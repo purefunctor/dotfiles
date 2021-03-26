@@ -123,10 +123,12 @@
   (setq fill-column 72))
 
 (defun pure/org-mode-startup ()
+  "Startup configuration for `org-mode`."
   (org-indent-mode)
   (setq evil-auto-indent nil))
 
 (defun pure/org-font-startup ()
+  "Startup configuration for `org-mode` fonts."
   (dolist (face '((org-level-1 . 1.50)
 		  (org-level-2 . 1.35)
 		  (org-level-3 . 1.20)
@@ -138,6 +140,7 @@
     (set-face-attribute (car face) nil :font "Monoid Nerd Font" :weight 'regular :height (cdr face))))
 
 (defun pure/org-fill-center ()
+  "Startup configuration for `org-mode` fill."
   (setq visual-fill-column-width 100)
   (setq visual-fill-column-center-text t)
   (visual-fill-column-mode 1)
