@@ -167,15 +167,16 @@
   :config
   (which-key-mode))
 
-(use-package haskell-mode)
+(use-package haskell-mode
+  :hook
+  (haskell-mode . (lambda () (setq-local eldoc-documentation-function nil))))
 
 (use-package lsp-mode
   :init
   (setq lsp-keymap-prefix "C-c v")
-  :hook ((haskell-mode . lsp)
-	 (purescript-mode . lsp)
-	 (python-mode . lsp)
-         (lsp-mode . lsp-enable-which-key-integration))
+  :hook
+  (python-mode . lsp)
+  (lsp-mode . lsp-enable-which-key-integration)
   :commands lsp)
 
 (use-package lsp-ui)
@@ -189,6 +190,29 @@
 (use-package purescript-mode
   :hook (purescript-mode . turn-on-purescript-indentation)
   :mode ("\\.purs$" . purescript-mode))
+
+(use-package dante
+  :ensure t
+  :after haskell-mode
+  :commands 'dante-mode
+  :bind
+  ("C-c r" . 'dante-restart)
+  ("M-[" . 'xref-find-references)
+  ("M-]" . 'xref-find-definitions)
+  :hook
+  (haskell-mode . dante-mode)
+  :init
+  (setq dante-tap-type-time 0.25))
+
+(use-package psc-ide
+  :ensure t
+  :bind
+  ("C-c /" . 'psc-ide-flycheck-insert-suggestion)
+  ("M-[" . 'xref-find-references)
+  ("M-]" . 'xref-find-definitions)
+  :after purescript-mode
+  :hook
+  (purescript-mode . psc-ide-mode))
 
 (use-package nix-mode
   :mode "\\.nix\\'")
@@ -208,7 +232,12 @@
 (use-package flycheck
   :diminish
   :ensure t
-  :init (global-flycheck-mode))
+  :bind
+  ("M-n" . 'flycheck-next-error)
+  ("M-p" . 'flycheck-previous-error)
+  ("M-l" . 'flycheck-list-errors)
+  :init
+  (global-flycheck-mode))
 
 (use-package company
   :diminish
