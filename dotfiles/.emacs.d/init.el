@@ -67,9 +67,6 @@
 	 ("C-d" . ivy-previous-i-search-kill))
   :config (ivy-mode))
 
-(use-package company
-  :config (global-company-mode))
-
 (use-package evil
   :demand
   :init
@@ -216,7 +213,7 @@
 (use-package company
   :diminish
   :ensure t
-  :bind ("C-SPC" . company-complete-common)
+  :bind ("C-SPC" . 'company-complete)
   :init (global-company-mode))
 
 (use-package vterm
