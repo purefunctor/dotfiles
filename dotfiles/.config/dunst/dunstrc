@@ -23,7 +23,7 @@
 
     frame_width = 1
 
-    frame_color = "#c69ef7"
+    frame_color = "#b0f4cc"
 
     separator_color = frame
 

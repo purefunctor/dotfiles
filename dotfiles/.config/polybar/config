@@ -31,7 +31,7 @@ height = 27
 radius = 0.0
 fixed-center = true
 
-background = ${colors.transparent}
+background = ${colors.transparent-less}
 foreground = ${colors.white}
 
 line-size = 2
@@ -54,10 +54,10 @@ font-3 = file\-icons:style=Regular:size=7
 font-4 = github\-octicons:style=Regular
 
 modules-left = bspwm
-modules-center = filesystem cpu memory battery date
+modules-center = filesystem battery cpu memory date
 modules-right = pulseaudio backlight
 
-tray-background = ${colors.transparent}
+tray-background = ${colors.transparent-less}
 tray-position = right
 tray-padding = 4
 
@@ -69,27 +69,33 @@ cursor-scroll = pointer
 [module/bspwm]
 type = internal/bspwm
 
-label-focused = %index%
+label-focused = %icon%
 label-focused-foreground = ${colors.green}
 label-focused-underline = ${colors.green}
 label-focused-background = ${colors.transparent-less}
 label-focused-padding = 2
 
-label-occupied = %index%
+label-occupied = %icon%
 label-occupied-foreground = ${colors.lavender}
 label-occupied-underline = ${colors.lavender}
 label-occupied-background = ${colors.transparent-less}
 label-occupied-padding = 2
 
-label-urgent = %index%!
+label-urgent = %icon%!
 label-urgent-foreground = ${colors.orange}
 label-urgent-background = ${colors.transparent-less}
 label-urgent-padding = 2
 
-label-empty = %index%
+label-empty = %icon%
 label-empty-foreground = ${colors.gray}
 label-empty-background = ${colors.transparent-less}
 label-empty-padding = 2
+
+ws-icon-0 = I;一
+ws-icon-1 = II;二
+ws-icon-2 = III;三
+ws-icon-3 = IV;四
+ws-icon-4 = V;五
 
 [module/filesystem]
 type = internal/fs
@@ -98,13 +104,13 @@ interval = 30
 mount-0 = /
 
 label-mounted = %mountpoint%:%percentage_used%%
-label-mounted-foreground = ${colors.black}
-label-mounted-background = ${colors.pink}
+label-mounted-foreground = ${colors.green}
+label-mounted-background = ${colors.transparent-less}
 label-mounted-padding = 1
 
 label-unmounted = %mountpoint% not mounted
-label-unmounted-foreground = ${colors.black}
-label-unmounted-background = ${colors.pink}
+label-unmounted-foreground = ${colors.green}
+label-unmounted-background = ${colors.transparent-less}
 label-unmounted-padding = 1
 
 [module/cpu]
@@ -115,18 +121,18 @@ label = C:%percentage:2%%
 
 label-padding = 1
 
-label-foreground = ${colors.black}
-label-background = ${colors.blue}
+label-foreground = ${colors.blue}
+label-background = ${colors.transparent-less}
 
 [module/memory]
 type = internal/memory
 interval = 2
 
-label = R:%percentage_used%%
+label = M:%percentage_used%%
 label-padding = 1
 
-label-foreground = ${colors.black}
-label-background = ${colors.green}
+label-foreground = ${colors.blue}
+label-background = ${colors.transparent-less}
 
 [module/battery]
 type = internal/battery
@@ -135,18 +141,18 @@ adapter = ADP1
 full-at = 98
 
 format-charging = <animation-charging><label-charging>
-format-charging-background = ${colors.purple}
-label-charging-foreground = ${colors.black}
+format-charging-background = ${colors.transparent-less}
+label-charging-foreground = ${colors.green}
 format-charging-padding = 1
 
 format-discharging = <animation-discharging><label-discharging>
-format-discharging-background = ${colors.purple}
-label-discharging-foreground = ${colors.black}
+format-discharging-background = ${colors.transparent-less}
+label-discharging-foreground = ${colors.green}
 format-discharging-padding = 1
 
 format-full = :FULL
-format-full-background = ${colors.purple}
-format-full-foreground = ${colors.black}
+format-full-background = ${colors.transparent-less}
+format-full-foreground = ${colors.green}
 format-full-padding = 1
 
 animation-charging-0 = :
@@ -154,7 +160,7 @@ animation-charging-1 = :
 animation-charging-2 = :
 animation-charging-3 = :
 animation-charging-4 = :
-animation-charging-foreground = ${colors.black}
+animation-charging-foreground = ${colors.green}
 animation-charging-framerate = 750
 
 animation-discharging-0 = :
@@ -162,23 +168,23 @@ animation-discharging-1 = :
 animation-discharging-2 = :
 animation-discharging-3 = :
 animation-discharging-4 = :
-animation-discharging-foreground = ${colors.black}
+animation-discharging-foreground = ${colors.green}
 animation-discharging-framerate = 750
 
 [module/date]
 type = internal/date
 interval = 5
 
-date = "%{F#e616161C}%{B#eff489}%Y-%m-%d "
+date = %Y-%m-%d
 # date-alt = " %Y-%m-%d"
 
-time = "%{F#e616161C}%{B#f4c489} %H:%M:%S"
+time = %H:%M:%S
 # time-alt = %H:%M:%S
 
-format-foreground = ${colors.black}
-format-background = ${colors.yellow}
+format-foreground = ${colors.purple}
+format-background = ${colors.transparent-less}
 
-label = %date%%time%
+label = %date% %time%
 
 format-padding = 1
 
@@ -187,13 +193,13 @@ type = internal/pulseaudio
 
 format-volume = <label-volume>
 label-volume = VOL: %percentage%%
-label-volume-foreground = ${colors.black}
-label-volume-background = ${colors.sky}
+label-volume-foreground = ${colors.sky}
+label-volume-background = ${colors.transparent-less}
 label-volume-padding = 1
 
 label-muted = muted
-label-muted-foreground = ${colors.black}
-label-muted-background = ${colors.sky}
+label-muted-foreground = ${colors.sky}
+label-muted-background = ${colors.transparent-less}
 label-muted-padding = 1
 
 click-right = pavucontrol
@@ -209,8 +215,8 @@ interval = 2
 scroll-up = ~/.config/polybar/extra/backlight.py increase
 scroll-down = ~/.config/polybar/extra/backlight.py decrease
 
-label-foreground = ${colors.black}
-label-background = ${colors.lavender}
+label-foreground = ${colors.lavender}
+label-background = ${colors.transparent-less}
 label-padding = 1
 
 [settings]
