@@ -108,3 +108,5 @@ fi
 cd "${PROOT}"
 
 eval "$(direnv hook zsh)"
+
+alias start-purescript-project="cookiecutter cookiecutter-purescript-template"
