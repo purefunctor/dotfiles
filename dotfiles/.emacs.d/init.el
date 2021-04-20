@@ -23,11 +23,16 @@
 
   (set-frame-parameter (selected-frame) 'alpha '(90 . 90))
   (add-to-list 'default-frame-alist '(alpha . (90 . 90)))
+  (set-face-attribute 'default nil :font "Monoid Nerd Font:style=Retina" :height 100)
 
-  (set-face-attribute
-     'default nil :font "Monoid Nerd Font:antialias=subpixel:size=12")
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-  (global-set-key (kbd "<escape>") 'keyboard-escape-quit))
+  (setq read-process-output-max (* 1024 32))
+
+  (require 'ansi-color)
+  (defun colorize-compilation-buffer ()
+    (ansi-color-apply-on-region compilation-filter-start (point)))
+  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer))
 
 
 (defun pure/packages ()
@@ -50,6 +55,8 @@
   (eval-when-compile
     (require 'use-package)
     (setq use-package-always-ensure t))
+
+  (use-package diminish)
 
   (require 'diminish)
   (require 'bind-key)
@@ -82,6 +89,17 @@
       ("C-k" . ivy-previous-line)
       ("C-d" . ivy-previous-i-search-kill))
     :config (ivy-mode))
+
+  (use-package prescient
+    :ensure t
+    :after ivy
+    :config
+    (ivy-prescient-mode))
+
+  (use-package counsel
+    :ensure t
+    :diminish
+    :config (counsel-mode))
 
   (use-package evil
     :ensure t
@@ -157,7 +175,8 @@
     :bind ("C-c g" . magit)
     :config
     (setq git-commit-summary-max-length 50)
-    (setq fill-column 72))
+    (setq fill-column 72)
+    (setq transient-default-level 5))
 
   (use-package org
     :bind ("C-c q" . org-agenda)
@@ -178,16 +197,21 @@
     :demand
     :ensure t
     :bind
-    ("M-n" . 'flycheck-next-error)
-    ("M-p" . 'flycheck-previous-error)
-    ("M-l" . 'flycheck-list-errors)
+    ( :map flycheck-mode-map
+      ("M-n" . 'flycheck-next-error)
+      ("M-p" . 'flycheck-previous-error)
+      ("M-l" . 'flycheck-list-errors))
     :init
-    (global-flycheck-mode))
+    (global-flycheck-mode)
+    :config
+    (setq flycheck-check-syntax-automatically '(save mode-enabled)))
 
   (use-package company
     :diminish
     :ensure t
-    :bind ("C-SPC" . 'company-complete)
+    :bind
+    ( :map company-mode-map
+      ("C-SPC" . 'company-complete))
     :init (global-company-mode))
 
   (use-package yasnippet
@@ -199,6 +223,7 @@
     :init
     (setq lsp-keymap-prefix "C-c v")
     :hook
+    ;; (purescript-mode . lsp)
     (python-mode . lsp)
     (lsp-mode . lsp-enable-which-key-integration)
     :commands lsp)
@@ -217,7 +242,12 @@
   "Load theme packages."
 
   (use-package base16-theme
+    :disabled
     :config (load-theme 'base16-horizon-dark t))
+
+  (use-package kaolin-themes
+    :config
+    (load-theme 'kaolin-blossom t))
 
   (use-package emojify
     :hook (after-init . global-emojify-mode))
@@ -229,7 +259,7 @@
     :config (setq org-superstar-leading-bullet ?\s))
 
   (use-package visual-fill-column
-    :hook (org-mode . +pure/setup-org-filled))
+    :hook (org-mode . +pure/setup-filled))
 
   (use-package ample-theme
     :init
@@ -245,7 +275,8 @@
 
   (use-package haskell-mode
     :bind
-    ("C-c f" . 'haskell-mode-stylish-buffer)
+    ( :map haskell-mode-map
+      ("C-c f" . 'haskell-mode-stylish-buffer))
     :hook
     (haskell-mode . (lambda () (setq-local eldoc-documentation-function nil))))
 
@@ -254,9 +285,10 @@
     :after haskell-mode
     :commands 'dante-mode
     :bind
-    ("C-c r" . 'dante-restart)
-    ("M-[" . 'xref-find-references)
-    ("M-]" . 'xref-find-definitions)
+    ( :map haskell-mode-map
+      ("C-c r" . 'dante-restart)
+      ("M-[" . 'xref-find-references)
+      ("M-]" . 'xref-find-definitions))
     :hook
     (haskell-mode . dante-mode)
     :init
@@ -273,19 +305,42 @@
   (use-package psc-ide
     :ensure t
     :bind
-    ("C-c /" . 'psc-ide-flycheck-insert-suggestion)
-    ("M-]" . 'psc-ide-goto-definition)
+    ( :map purescript-mode-map
+      ("C-c /" . 'psc-ide-flycheck-insert-suggestion)
+      ("M-]" . 'psc-ide-goto-definition))
     :after purescript-mode
     :hook
     (purescript-mode . psc-ide-mode))
+
+  (use-package poetry
+    :ensure t)
 
   (use-package nix-mode
     :mode "\\.nix\\'")
 
   (use-package yaml-mode
     :mode "\\.yaml\\'")
-  )
 
+  (use-package markdown-mode
+    :hook
+    (gfm-mode . +pure/setup-filled)
+    (gfm-mode . +pure/setup-md-fonts)
+    (markdown-mode . +pure/setup-filled)
+    (markdown-mode . +pure/setup-md-fonts)
+    :mode
+    ("README\\.md\\'" . gfm-mode)
+    ("\\.md\\'" . markdown-mode)
+    ("\\.markdown\\'" . markdown-mode)
+    :init
+    (setq markdown-command "multimarkdown"))
+
+  (setq-default indent-tabs-mode nil)
+
+  (add-hook 'js-mode-hook (lambda () (setq-default js-indent-level 2)))
+
+  (use-package dhall-mode
+    :ensure t
+    :mode "\\.dhall\\'"))
 
 (defun +pure/setup-org-mode ()
   "Startup configuration for `org-mode`."
@@ -296,7 +351,6 @@
   "Startup configuration for `org-mode` fonts."
   (dolist (face '((org-level-1 . 1.50)
 		  (org-level-2 . 1.35)
-
 		  (org-level-3 . 1.20)
 		  (org-level-4 . 1.05)
 		  (org-level-5 . 1.00)
@@ -305,13 +359,25 @@
 		  (org-level-8 . 1.00)))
     (set-face-attribute (car face) nil :font "Monoid Nerd Font" :weight 'regular :height (cdr face))))
 
-(defun +pure/setup-org-filled ()
+(defun +pure/setup-md-fonts ()
+  "Startup configuration for `markdown-mode` fonts."
+  (variable-pitch-mode 1)
+  (set-face-attribute 'variable-pitch nil :font "Noto Sans" :weight 'light :height 1.50)
+  (set-face-attribute 'markdown-code-face nil :font "FiraCode Nerd Font" :weight 'light :height 0.9)
+  (dolist (face '((markdown-header-face-1 . 2.50)
+		  (markdown-header-face-2 . 2.25)
+		  (markdown-header-face-3 . 2.00)
+		  (markdown-header-face-4 . 1.75)
+		  (markdown-header-face-5 . 1.50)
+		  (markdown-header-face-6 . 1.25)))
+    (set-face-attribute (car face) nil :font "Noto Sans" :weight 'light :height (cdr face))))
+
+(defun +pure/setup-filled ()
   "Startup configuration for `org-mode` fill."
   (defvar visual-fill-column-width 100)
   (defvar visual-fill-column-center-text t)
   (visual-fill-column-mode 1)
   (visual-line-mode 1))
-
 
 (pure/base)
 (pure/packages)
