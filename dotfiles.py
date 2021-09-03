@@ -5,7 +5,7 @@ from subprocess import run
 
 HOME = Path.home()
 
-RECURSE_INTO = { ".config" }
+RECURSE_INTO = {".config"}
 
 CLI_PARSER = ArgumentParser("dotfiles")
 CLI_PARSER.add_argument("sources", nargs="*")
@@ -13,7 +13,7 @@ CLI_PARSER.add_argument("sources", nargs="*")
 
 def _link(source: Path, target: Path) -> None:
     arguments = [
-        "ln", "-sf", str(Path("dotfiles") / source.absolute()), "-t", str(target), "-v"
+        "ln", "-sf", str(source.absolute()), "-t", str(target), "-v"
     ]
 
     run(arguments)
@@ -23,7 +23,7 @@ if __name__ == "__main__":
     args = CLI_PARSER.parse_args()
 
     sources = [
-        Path(source) for source in args.sources
+        Path("dotfiles", source) for source in args.sources
     ] or Path("dotfiles").iterdir()
 
     for source in sources:

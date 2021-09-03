@@ -8,7 +8,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="pure"
+ZSH_THEME="takashiyoshida"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -68,7 +68,7 @@ ZSH_THEME="pure"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -98,15 +98,12 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-source "$HOME/.pure/scripts/locale.sh"
-source "$HOME/.pure/scripts/paths.sh"
-
 if [[ "${PROOT}" = "$HOME/" ]]; then
     PROOT=$HOME
 fi
 
 cd "${PROOT}"
 
-eval "$(direnv hook zsh)"
-
+alias ls="exa"
 alias start-purescript-project="cookiecutter cookiecutter-purescript-template"
+alias emacs-cli="TERM=xterm-24bit emacsclient -t"

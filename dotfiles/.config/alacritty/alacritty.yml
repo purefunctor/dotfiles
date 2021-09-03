@@ -1,13 +1,18 @@
+window:
+  padding:
+    x: 4
+    y: 4
+
 font:
   size: 8.8
   normal:
-    family: FiraCode Nerd Font
+    family: Monoid Nerd Font
     style: Regular
   bold:
-    family: FiraCode Nerd Font
+    family: Monoid Nerd Font
     style: Bold
   italic:
-    family: FiraCode Nerd Font
+    family: Monoid Nerd Font
     style: Italic
 
 colors:

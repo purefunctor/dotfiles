@@ -4,7 +4,7 @@
 
 # terminal emulator
 super + Return
-	alacritty
+	kitty
 
 # program launcher
 super + @space
@@ -154,6 +154,10 @@ XF86AudioMute
 # Emacs
 super + e
   emacs
+
+# Emacs Client
+super + shift + e
+  emacsclient -c
 
 # Locker
 alt + super + x
