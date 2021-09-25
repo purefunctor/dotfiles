@@ -1,8 +1,0 @@
-xset -b
-
-# source "$HOME/.pure/scripts/locale.sh"
-# source "$HOME/.pure/scripts/paths.sh"
-
-eval $(keychain --eval)
-
-export QT_QPA_PLATFORMTHEME=qt5ct
