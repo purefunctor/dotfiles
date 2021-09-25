@@ -104,6 +104,6 @@ fi
 
 cd "${PROOT}"
 
-alias ls="exa"
+alias ls="exa --group-directories-first"
 alias start-purescript-project="cookiecutter cookiecutter-purescript-template"
 alias emacs-cli="TERM=xterm-24bit emacsclient -t"
