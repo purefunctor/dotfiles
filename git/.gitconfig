@@ -1,13 +1,12 @@
-[user]
-	name = PureFunctor
-	email = purefunctor@gmail.com
-[core]
-	editor = nvim
 [pull]
-	rebase = false
+    rebase = false
 [init]
-	defaultbranch = main
+    defaultbranch = main
 [alias]
-	gone = ! git fetch -p && git for-each-ref --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" {print $1}' | xargs -r git branch -D
-[github]
-	user = PureFunctor
+    gone = ! git fetch -p && git for-each-ref --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" {print $1}' | xargs -r git branch -D
+[commit]
+    gpgsign = true
+[includeIf "gitdir:~/PureFunctor/**/"]
+    path = "~/PureFunctor/.gitconfig"
+[includeIf "gitdir:~/Personal/**/"]
+    path = "~/Personal/.gitconfig"
