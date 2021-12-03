@@ -1,1 +1,2 @@
-source ".local/bin/scripts/paths.sh"
+source ".local/bin/paths.sh"
+eval $(keychain --eval)

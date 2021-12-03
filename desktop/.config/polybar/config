@@ -1,6 +1,6 @@
 ;==========================================================
 ;
-;   GruV
+;   Pure
 ;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
 ;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
 ;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
@@ -17,38 +17,32 @@ pink = #f79bbd
 yellow = #eff489
 orange = #f4c489
 lavender = #c69ef7
+red = #f93455
 transparent = #00000000
 transparent-less = #AA000000
 
-# black = #e61d2021
 black = #e6232531
-green = #ff8ec07c
-blue = #458588
+green = #91dd73
+blue = #72dae0
 white = #ebdbb2
 
 [bar/solidus]
 width = 100%
 height = 30
-radius = 0.0
-fixed-center = true
-
-bottom = false
+radius = 0
+fixed-center = false
+bottom = true
 
 background = ${colors.black}
 foreground = ${colors.white}
 
-separator = "|"
-separator-background = ${colors.black}
-separator-foreground = ${colors.white}
-
 line-size = 2
-line-color = #f00
 
 border-top-size = 0
 border-left-size = 0
 border-right-size = 0
 border-bottom-size = 0
-border-color = #00000000
+border-color = #00282828
 
 padding-left = 0
 padding-right = 0
@@ -56,32 +50,50 @@ padding-right = 0
 module-margin-left = 0
 module-margin-right = 0
 
-font-0 = Monoid Nerd Font:style=Retina:size=7
-font-1 = Noto Sans CJK JP:style=Regular:size=7
+font-0 = "xos4 Terminus:style=Regular:size=8"
+font-1 = "Material Icons Outlined:8;4"
+font-2 = "Material Icons Round:8;4"
+font-3 = "Fira Code Nerd Font Mono:style=Retina:size=12"
 
-font-2 = all\-the\-icons:style=Regular
-font-3 = file\-icons:style=Regular:size=7
-font-4 = github\-octicons:style=Regular
-
-modules-left = date cpu memory filesystem battery pulseaudio backlight
-modules-center = bspwm 
+modules-left = date network
+modules-center = bspwm
+modules-right = cpu memory battery pulseaudio backlight
 
 tray-background = ${colors.black}
 tray-position = right
-tray-padding = 4
+tray-padding = 2
 
+wm-name = bspwm
+wm-restack = bspwm
 override-redirect = true
 
 cursor-click = pointer
 cursor-scroll = pointer
 
+enable-ipc = true
+
+[module/network]
+type = internal/network
+interface = wlp1s0
+interval = 5.0
+
+label-connected = %essid%
+label-connected-padding = 1
+label-connected-background = ${colors.black}
+label-connected-underline = ${colors.green}
+
+format-connected-prefix = 
+format-connected-prefix-padding = 1
+format-connected-prefix-background = ${colors.green}
+format-connected-prefix-foreground = ${colors.black}
+
 [module/bspwm]
 type = internal/bspwm
 
 label-focused = %icon%
-label-focused-foreground = ${colors.black}
+label-focused-foreground = ${colors.white}
 label-focused-underline = ${colors.green}
-label-focused-background = ${colors.green}
+label-focused-background = ${colors.black}
 label-focused-padding = 2
 
 label-occupied = %icon%
@@ -100,11 +112,11 @@ label-empty-foreground = ${colors.gray}
 label-empty-background = ${colors.black}
 label-empty-padding = 2
 
-ws-icon-0 = I;一
-ws-icon-1 = II;二
-ws-icon-2 = III;三
-ws-icon-3 = IV;四
-ws-icon-4 = V;五
+ws-icon-0 = I;
+ws-icon-1 = II;
+ws-icon-2 = III;
+ws-icon-3 = IV;
+ws-icon-4 = V;
 
 [module/filesystem]
 type = internal/fs
@@ -115,33 +127,43 @@ mount-0 = /
 label-mounted = %mountpoint%:%percentage_used%%
 label-mounted-foreground = ${colors.white}
 label-mounted-background = ${colors.black}
+label-mounted-underline = ${colors.lavender}
 label-mounted-padding = 1
 
-label-unmounted = %mountpoint% not mounted
-label-unmounted-foreground = ${colors.white}
-label-unmounted-background = ${colors.black}
-label-unmounted-padding = 1
+format-mounted-prefix = 
+format-mounted-prefix-padding = 1
+format-mounted-prefix-foreground = ${colors.black}
+format-mounted-prefix-background = ${colors.lavender}
 
 [module/cpu]
 type = internal/cpu
-interval = 2
+interval = 5
 
-label = C:%percentage:2%%
-
+label = %percentage:2%%
 label-padding = 1
-
 label-foreground = ${colors.white}
 label-background = ${colors.black}
+label-underline = ${colors.red}
+
+format-prefix = 
+format-prefix-padding = 1
+format-prefix-foreground = ${colors.black}
+format-prefix-background = ${colors.red}
 
 [module/memory]
 type = internal/memory
-interval = 2
+interval = 5
 
-label = M:%percentage_used%%
+label = %percentage_used%%
 label-padding = 1
-
 label-foreground = ${colors.white}
 label-background = ${colors.black}
+label-underline = ${colors.red}
+
+format-prefix = 
+format-prefix-padding = 1
+format-prefix-foreground = ${colors.black}
+format-prefix-background = ${colors.red}
 
 [module/battery]
 type = internal/battery
@@ -149,67 +171,76 @@ battery = BAT0
 adapter = ADP1
 full-at = 98
 
-format-charging = <animation-charging><label-charging>
-format-charging-background = ${colors.black}
+format-charging = <label-charging>
+label-charging-background = ${colors.black}
 label-charging-foreground = ${colors.white}
-format-charging-padding = 1
+label-charging-underline = ${colors.green}
+label-charging-padding = 1
+format-charging-prefix = 
+format-charging-prefix-foreground = ${colors.black}
+format-charging-prefix-background = ${colors.green}
+format-charging-prefix-padding = 1
 
-format-discharging = <animation-discharging><label-discharging>
-format-discharging-background = ${colors.black}
+format-discharging = <label-discharging>
+label-discharging-background = ${colors.black}
 label-discharging-foreground = ${colors.white}
-format-discharging-padding = 1
+label-discharging-underline = ${colors.lavender}
+label-discharging-padding = 1
+format-discharging-prefix = 
+format-discharging-prefix-foreground = ${colors.black}
+format-discharging-prefix-background = ${colors.lavender}
+format-discharging-prefix-padding = 1
 
-format-full = :FULL
-format-full-background = ${colors.black}
-format-full-foreground = ${colors.white}
-format-full-padding = 1
-
-animation-charging-0 = :
-animation-charging-1 = :
-animation-charging-2 = :
-animation-charging-3 = :
-animation-charging-4 = :
-animation-charging-foreground = ${colors.white}
-animation-charging-framerate = 750
-
-animation-discharging-0 = :
-animation-discharging-1 = :
-animation-discharging-2 = :
-animation-discharging-3 = :
-animation-discharging-4 = :
-animation-discharging-foreground = ${colors.white}
-animation-discharging-framerate = 750
+format-full = <label-full>
+label-full-background = ${colors.black}
+label-full-foreground = ${colors.white}
+label-full-underline = ${colors.blue}
+label-full-padding = 1
+format-full-prefix = 
+format-full-prefix-background = ${colors.blue}
+format-full-prefix-foreground = ${colors.black}
+format-full-prefix-padding = 1
 
 [module/date]
 type = internal/date
-interval = 5
+interval = 1
 
 date = %Y-%m-%d
-# date-alt = " %Y-%m-%d"
-
 time = %H:%M:%S
-# time-alt = %H:%M:%S
-
-format-foreground = ${colors.white}
-format-background = ${colors.black}
 
 label = %date% %time%
+label-padding = 1
+label-background = ${colors.black}
+label-underline = ${colors.yellow}
 
-format-padding = 1
+format-prefix = 
+format-prefix-padding = 1
+format-prefix-foreground = ${colors.black}
+format-prefix-background = ${colors.yellow}
 
 [module/pulseaudio]
 type = internal/pulseaudio
 
 format-volume = <label-volume>
-label-volume = VOL: %percentage%%
 label-volume-foreground = ${colors.white}
 label-volume-background = ${colors.black}
+label-volume-underline = ${colors.pink}
 label-volume-padding = 1
+format-volume-prefix = 
+format-volume-prefix-foreground = ${colors.black}
+format-volume-prefix-background = ${colors.pink}
+format-volume-prefix-padding = 1
 
-label-muted = muted
+format-muted = <label-muted>
+label-muted = %percentage%%
+label-muted-padding = 1
 label-muted-foreground = ${colors.white}
 label-muted-background = ${colors.black}
-label-muted-padding = 1
+label-muted-underline = ${colors.pink}
+format-muted-prefix = 
+format-muted-prefix-foreground = ${colors.black}
+format-muted-prefix-background = ${colors.pink}
+format-muted-prefix-padding = 1
 
 click-right = pavucontrol
 
@@ -217,20 +248,25 @@ click-right = pavucontrol
 type = custom/script
 
 exec = ~/.config/polybar/extra/backlight.py
-
 tail = true
-interval = 2
+interval = 5
 
 scroll-up = ~/.config/polybar/extra/backlight.py increase
 scroll-down = ~/.config/polybar/extra/backlight.py decrease
 
 label-foreground = ${colors.white}
 label-background = ${colors.black}
+label-underline = ${colors.green}
 label-padding = 1
+
+format-prefix = 
+format-prefix-padding = 1
+format-prefix-foreground = ${colors.black}
+format-prefix-background = ${colors.green}
 
 [settings]
 screenchange-reload = true
-pseudo-transparency = true
+pseudo-transparency = false
 
 [global/wm]
 margin-top = 0

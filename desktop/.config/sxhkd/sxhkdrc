@@ -159,6 +159,9 @@ super + e
 super + shift + e
   emacsclient -c
 
-# Locker
-alt + super + x
-  betterlockscreen -l blur
+# Dunst
+super + alt + n;
+  dunstctl history-pop
+
+super + alt + m:
+  dunstctl close

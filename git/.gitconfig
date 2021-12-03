@@ -8,5 +8,7 @@
     gpgsign = true
 [includeIf "gitdir:~/PureFunctor/**/"]
     path = "~/PureFunctor/.gitconfig"
+[includeIf "gitdir:~/Vitriol/**/"]
+    path = "~/Vitriol/.gitconfig"
 [includeIf "gitdir:~/Personal/**/"]
     path = "~/Personal/.gitconfig"
